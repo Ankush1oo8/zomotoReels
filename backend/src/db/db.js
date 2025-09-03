@@ -1,7 +1,7 @@
 const mongoose=require("mongoose");
 
 function connectDB() {
-    mongoose.connect("mongodb+srv://ankush2025:Ankush%402025@cluster0.kocggji.mongodb.net/zomatoReels")
+    mongoose.connect(process.env.MONGODB_URI)
     .then(()=>{
         console.log("Mongo Db connected successfully")
     })
