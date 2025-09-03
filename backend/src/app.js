@@ -1,14 +1,19 @@
 //create server
 const express=require("express");
-
+const cookieParser=require("cookie-parser")
+const authRoutes=require("./routes/auth.routes")
 const app=express();
+app.use(express.json());
+app.use(cookieParser());
+
+
 
 app.get("/",(req,res)=>{
     res.send("Hello there!!");
 })
 
+app.use('/api/auth',authRoutes);
 
 
 
-
-modules.export=app;
+module.exports=app;
