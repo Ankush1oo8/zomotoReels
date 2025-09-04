@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/reels.css'
 import ReelFeed from '../../components/ReelFeed'
 
 const Home = () => {
     const [ videos, setVideos ] = useState([])
+    const navigate = useNavigate();
     // Autoplay behavior is handled inside ReelFeed
 
     useEffect(() => {
         axios.get("http://localhost:3000/api/food", { withCredentials: true })
             .then(response => {
-
                 console.log(response.data);
-
                 setVideos(response.data.foodItems)
             })
-            .catch(() => { /* noop: optionally handle error */ })
-    }, [])
+            .catch((err) => {
+                if (err.response && err.response.status === 401) {
+                    navigate('/user/login');
+                }
+            })
+    }, [navigate])
 
     // Using local refs within ReelFeed; keeping map here for dependency parity if needed
 
